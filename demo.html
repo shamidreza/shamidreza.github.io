@@ -1,0 +1,416 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	  <head>
+	      <!-- This page is copyright Elated Communications Ltd. (www.elated.com) -->
+	      <a href="http://cslu.ohsu.edu/~mohammah/">< back to home</a>
+	          <title>Demo</title>
+
+		      <style type="text/css">
+		            body { font-size: 80%; font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif; }
+			          ul#tabs { list-style-type: none; margin: 30px 0 0 0; padding: 0 0 0.3em 0; }
+				        ul#tabs li { display: inline; }
+					      ul#tabs li a { color: #42454a; background-color: #dedbde; border: 1px solid #c9c3ba; border-bottom: none; padding: 0.3em; text-decoration: none; }
+					            ul#tabs li a:hover { background-color: #f1f0ee; }
+						          ul#tabs li a.selected { color: #000; background-color: #f1f0ee; font-weight: bold; padding: 0.7em 0.3em 0.38em 0.3em; }
+							        div.tabContent { border: 1px solid #c9c3ba; padding: 0.5em; background-color: #f1f0ee; }
+								      div.tabContent.hide { display: none; }
+								      table, th, td {
+								          border: 1px solid black;
+									      border-collapse: collapse;
+									      }
+									      th, td {
+									          padding: 5px;
+										      text-align: center;
+										      }
+										      table#t01 tr:nth-child(even) {
+										          background-color: #eee;
+											  }
+											  table#t01 tr:nth-child(odd) {
+											     background-color:#fff;
+											     }
+											     table#t01 th	{
+											         background-color: gray;
+												     color: white;
+												     }
+												         </style>
+
+													     <script type="text/javascript">
+													         //<![CDATA[
+
+														     var tabLinks = new Array();
+														         var contentDivs = new Array();
+
+															     function init() {
+
+															           // Grab the tab links and content divs from the page
+																         var tabListItems = document.getElementById('tabs').childNodes;
+																	       for ( var i = 0; i < tabListItems.length; i++ ) {
+																	               if ( tabListItems[i].nodeName == "LI" ) {
+																		                 var tabLink = getFirstChildWithTagName( tabListItems[i], 'A' );
+																				           var id = getHash( tabLink.getAttribute('href') );
+																					             tabLinks[id] = tabLink;
+																						               contentDivs[id] = document.getElementById( id );
+																							               }
+																								             }
+
+																									           // Assign onclick events to the tab links, and
+																										         // highlight the first tab
+																											       var i = 0;
+
+																											             for ( var id in tabLinks ) {
+																												             tabLinks[id].onclick = showTab;
+																													             tabLinks[id].onfocus = function() { this.blur() };
+																														             if ( i == 0 ) tabLinks[id].className = 'selected';
+																															             i++;
+																																           }
+
+																																	         // Hide all content divs except the first
+																																		       var i = 0;
+
+																																		             for ( var id in contentDivs ) {
+																																			             if ( i != 0 ) contentDivs[id].className = 'tabContent hide';
+																																				             i++;
+																																					           }
+																																						       }
+
+																																						           function showTab() {
+																																							         var selectedId = getHash( this.getAttribute('href') );
+
+																																								       // Highlight the selected tab, and dim all others.
+																																								             // Also show the selected content div, and hide all others.
+																																									           for ( var id in contentDivs ) {
+																																										           if ( id == selectedId ) {
+																																											             tabLinks[id].className = 'selected';
+																																												               contentDivs[id].className = 'tabContent';
+																																													               } else {
+																																														                 tabLinks[id].className = '';
+																																																           contentDivs[id].className = 'tabContent hide';
+																																																	           }
+																																																		         }
+
+																																																			       // Stop the browser following the link
+																																																			             return false;
+																																																				         }
+
+																																																					     function getFirstChildWithTagName( element, tagName ) {
+																																																					           for ( var i = 0; i < element.childNodes.length; i++ ) {
+																																																						           if ( element.childNodes[i].nodeName == tagName ) return element.childNodes[i];
+																																																							         }
+																																																								     }
+
+																																																								         function getHash( url ) {
+																																																									       var hashPos = url.lastIndexOf ( '#' );
+																																																									             return url.substring( hashPos + 1 );
+																																																										         }
+
+																																																											     //]]>
+																																																											         </script>
+																																																												   </head>
+																																																												     <body onload="init()">
+																																																												         <h1>Demo</h1>
+
+																																																													 Vocoder: <a href="http://aholab.ehu.es/ahocoder/">Ahocoder</a><BR>
+																																																													 Corpus: <a href="http://festvox.org/cmu_arctic/">CMU-Arctic</a> <BR>
+																																																													 Source speaker: RMS<BR>
+																																																													 Target Speaker: BDL<BR>
+																																																													 Training sentences: a0100-a****<BR>
+																																																													 Number of training sentences: 5 (<b>S</b>), 20 (<b>M</b>), 100 (<b>L</b>)
+																																																													 <BR><BR>
+
+																																																													 <table id="t01">
+																																																													  
+																																																													  <tr>
+																																																													      <th scope="col">Method</th>
+																																																													          <th scope="col">a0001</th>
+																																																														      <th scope="col">a0002</th>
+																																																														          <th scope="col">a0003</th>
+																																																															      <th scope="col">a0004</th>
+																																																															          <th scope="col">a0005</th>
+																																																																      <th scope="col">Comments</th>
+																																																																      </tr>
+
+																																																																        <tr>
+																																																																	    <th scope="row">RMS</th>
+
+																																																																	        <td>
+																																																																		    <audio id="row1_a0001" src="demo/RMS_a0001.wav"></audio>
+																																																																		        <button onclick="document.getElementById('row1_a0001').play()">></button>
+																																																																			    <button onclick="document.getElementById('row1_a0001').pause()">||</button>
+																																																																			        </td>
+																																																																				    <td>
+																																																																				        <audio id="row1_a0002" src="demo/RMS_a0002.wav"></audio>
+																																																																					    <button onclick="document.getElementById('row1_a0002').play()">></button>
+																																																																					        <button onclick="document.getElementById('row1_a0002').pause()">||</button>
+																																																																						    </td>
+																																																																						        <td>
+																																																																							    <audio id="row1_a0003" src="demo/RMS_a0003.wav"></audio>
+																																																																							        <button onclick="document.getElementById('row1_a0003').play()">></button>
+																																																																								    <button onclick="document.getElementById('row1_a0003').pause()">||</button>
+																																																																								        </td>
+																																																																									    <td>
+																																																																									        <audio id="row1_a0004" src="demo/RMS_a0004.wav"></audio>
+																																																																										    <button onclick="document.getElementById('row1_a0004').play()">></button>
+																																																																										        <button onclick="document.getElementById('row1_a0004').pause()">||</button>
+																																																																											    </td>
+																																																																											        <td>
+																																																																												    <audio id="row1_a0005" src="demo/RMS_a0005.wav"></audio>
+																																																																												        <button onclick="document.getElementById('row1_a0005').play()">></button>
+																																																																													    <button onclick="document.getElementById('row1_a0005').pause()">||</button>
+																																																																													        </td>
+																																																																														   
+																																																																														       <td>Original RMS Speech</td>
+
+																																																																														         </tr>
+																																																																															   <tr>
+																																																																															       <th scope="row">BDL</th>
+
+																																																																															           <td>
+																																																																																       <audio id="row2_a0001" src="demo/BDL_a0001.wav"></audio>
+																																																																																           <button onclick="document.getElementById('row2_a0001').play()">></button>
+																																																																																	       <button onclick="document.getElementById('row2_a0001').pause()">||</button>
+																																																																																	           </td>
+																																																																																		       <td>
+																																																																																		           <audio id="row2_a0002" src="demo/BDL_a0002.wav"></audio>
+																																																																																			       <button onclick="document.getElementById('row2_a0002').play()">></button>
+																																																																																			           <button onclick="document.getElementById('row2_a0002').pause()">||</button>
+																																																																																				       </td>
+																																																																																				           <td>
+																																																																																					       <audio id="row2_a0003" src="demo/BDL_a0003.wav"></audio>
+																																																																																					           <button onclick="document.getElementById('row2_a0003').play()">></button>
+																																																																																						       <button onclick="document.getElementById('row2_a0003').pause()">||</button>
+																																																																																						           </td>
+																																																																																							       <td>
+																																																																																							           <audio id="row2_a0004" src="demo/BDL_a0004.wav"></audio>
+																																																																																								       <button onclick="document.getElementById('row2_a0004').play()">></button>
+																																																																																								           <button onclick="document.getElementById('row2_a0004').pause()">||</button>
+																																																																																									       </td>
+																																																																																									           <td>
+																																																																																										       <audio id="row2_a0005" src="demo/BDL_a0005.wav"></audio>
+																																																																																										           <button onclick="document.getElementById('row2_a0005').play()">></button>
+																																																																																											       <button onclick="document.getElementById('row2_a0005').pause()">||</button>
+																																																																																											           </td>
+																																																																																												      
+																																																																																												          <td>Original BDL Speech</td>
+
+																																																																																													    </tr>
+
+																																																																																													    <tr>
+																																																																																													        <th scope="row">GMM-S</th>
+
+																																																																																														    <td>
+																																																																																														        <audio id="row3_a0001" src="demo/X_a0001.wav"></audio>
+																																																																																															    <button onclick="document.getElementById('row3_a0001').play()">></button>
+																																																																																															        <button onclick="document.getElementById('row3_a0001').pause()">||</button>
+																																																																																																    </td>
+																																																																																																        <td>
+																																																																																																	    <audio id="row3_a0002" src="demo/X_a0002.wav"></audio>
+																																																																																																	        <button onclick="document.getElementById('row3_a0002').play()">></button>
+																																																																																																		    <button onclick="document.getElementById('row3_a0002').pause()">||</button>
+																																																																																																		        </td>
+																																																																																																			    <td>
+																																																																																																			        <audio id="row3_a0003" src="demo/X_a0003.wav"></audio>
+																																																																																																				    <button onclick="document.getElementById('row3_a0003').play()">></button>
+																																																																																																				        <button onclick="document.getElementById('row3_a0003').pause()">||</button>
+																																																																																																					    </td>
+																																																																																																					        <td>
+																																																																																																						    <audio id="row3_a0004" src="demo/X_a0004.wav"></audio>
+																																																																																																						        <button onclick="document.getElementById('row3_a0004').play()">></button>
+																																																																																																							    <button onclick="document.getElementById('row3_a0004').pause()">||</button>
+																																																																																																							        </td>
+																																																																																																								    <td>
+																																																																																																								        <audio id="row3_a0005" src="demo/X_a0005.wav"></audio>
+																																																																																																									    <button onclick="document.getElementById('row3_a0005').play()">></button>
+																																																																																																									        <button onclick="document.getElementById('row3_a0005').pause()">||</button>
+																																																																																																										    </td>
+																																																																																																										       
+																																																																																																										           <td>GMM VC [Kain_ICASSP98], with Q=X, 5 training sentences</td>
+
+																																																																																																											     </tr>
+																																																																																																											     <tr>
+																																																																																																											         <th scope="row">GMM-L</th>
+
+																																																																																																												     <td>
+																																																																																																												         <audio id="row4_a0001" src="demo/X_a0001.wav"></audio>
+																																																																																																													     <button onclick="document.getElementById('row4_a0001').play()">></button>
+																																																																																																													         <button onclick="document.getElementById('row4_a0001').pause()">||</button>
+																																																																																																														     </td>
+																																																																																																														         <td>
+																																																																																																															     <audio id="row4_a0002" src="demo/X_a0002.wav"></audio>
+																																																																																																															         <button onclick="document.getElementById('row4_a0002').play()">></button>
+																																																																																																																     <button onclick="document.getElementById('row4_a0002').pause()">||</button>
+																																																																																																																         </td>
+																																																																																																																	     <td>
+																																																																																																																	         <audio id="row4_a0003" src="demo/X_a0003.wav"></audio>
+																																																																																																																		     <button onclick="document.getElementById('row4_a0003').play()">></button>
+																																																																																																																		         <button onclick="document.getElementById('row4_a0003').pause()">||</button>
+																																																																																																																			     </td>
+																																																																																																																			         <td>
+																																																																																																																				     <audio id="row4_a0004" src="demo/X_a0004.wav"></audio>
+																																																																																																																				         <button onclick="document.getElementById('row4_a0004').play()">></button>
+																																																																																																																					     <button onclick="document.getElementById('row4_a0004').pause()">||</button>
+																																																																																																																					         </td>
+																																																																																																																						     <td>
+																																																																																																																						         <audio id="row4_a0005" src="demo/X_a0005.wav"></audio>
+																																																																																																																							     <button onclick="document.getElementById('row4_a0005').play()">></button>
+																																																																																																																							         <button onclick="document.getElementById('row4_a0005').pause()">||</button>
+																																																																																																																								     </td>
+																																																																																																																								        
+																																																																																																																									    <td>GMM VC [Kain_ICASSP98], with Q=X, 100 training sentences</td>
+
+																																																																																																																									      </tr>
+
+
+																																																																																																																									      <tr>
+																																																																																																																									          <th scope="row">DNN-S</th>
+
+																																																																																																																										      <td>
+																																																																																																																										          <audio id="row6_a0001" src="demo/RMS2BDL_1S_a0001.wav"></audio>
+																																																																																																																											      <button onclick="document.getElementById('row6_a0001').play()">></button>
+																																																																																																																											          <button onclick="document.getElementById('row6_a0001').pause()">||</button>
+																																																																																																																												      </td>
+																																																																																																																												          <td>
+																																																																																																																													      <audio id="row6_a0002" src="demo/RMS2BDL_1S_a0002.wav"></audio>
+																																																																																																																													          <button onclick="document.getElementById('row6_a0002').play()">></button>
+																																																																																																																														      <button onclick="document.getElementById('row6_a0002').pause()">||</button>
+																																																																																																																														          </td>
+																																																																																																																															      <td>
+																																																																																																																															          <audio id="row6_a0003" src="demo/RMS2BDL_1S_a0003.wav"></audio>
+																																																																																																																																      <button onclick="document.getElementById('row6_a0003').play()">></button>
+																																																																																																																																          <button onclick="document.getElementById('row6_a0003').pause()">||</button>
+																																																																																																																																	      </td>
+																																																																																																																																	          <td>
+																																																																																																																																		      <audio id="row6_a0004" src="demo/RMS2BDL_1S_a0004.wav"></audio>
+																																																																																																																																		          <button onclick="document.getElementById('row6_a0004').play()">></button>
+																																																																																																																																			      <button onclick="document.getElementById('row6_a0004').pause()">||</button>
+																																																																																																																																			          </td>
+																																																																																																																																				      <td>
+																																																																																																																																				          <audio id="row6_a0005" src="demo/RMS2BDL_1S_a0005.wav"></audio>
+																																																																																																																																					      <button onclick="document.getElementById('row6_a0005').play()">></button>
+																																																																																																																																					          <button onclick="document.getElementById('row6_a0005').pause()">||</button>
+																																																																																																																																						      </td>
+																																																																																																																																						         
+																																																																																																																																							     <td>DNN-VC [Desai_TASLP10], config: 1S in [Mohammadi_Interspeech15], 5 training sentences</td>
+
+																																																																																																																																							       </tr>
+
+
+																																																																																																																																							       <tr>
+																																																																																																																																							           <th scope="row">jointAE-S</th>
+
+																																																																																																																																								       <td>
+																																																																																																																																								           <audio id="row7_a0001" src="demo/RMS2BDL_6S_a0001.wav"></audio>
+																																																																																																																																									       <button onclick="document.getElementById('row7_a0001').play()">></button>
+																																																																																																																																									           <button onclick="document.getElementById('row7_a0001').pause()">||</button>
+																																																																																																																																										       </td>
+																																																																																																																																										           <td>
+																																																																																																																																											       <audio id="row7_a0002" src="demo/RMS2BDL_6S_a0002.wav"></audio>
+																																																																																																																																											           <button onclick="document.getElementById('row7_a0002').play()">></button>
+																																																																																																																																												       <button onclick="document.getElementById('row7_a0002').pause()">||</button>
+																																																																																																																																												           </td>
+																																																																																																																																													       <td>
+																																																																																																																																													           <audio id="row7_a0003" src="demo/RMS2BDL_6S_a0003.wav"></audio>
+																																																																																																																																														       <button onclick="document.getElementById('row7_a0003').play()">></button>
+																																																																																																																																														           <button onclick="document.getElementById('row7_a0003').pause()">||</button>
+																																																																																																																																															       </td>
+																																																																																																																																															           <td>
+																																																																																																																																																       <audio id="row7_a0004" src="demo/RMS2BDL_6S_a0004.wav"></audio>
+																																																																																																																																																           <button onclick="document.getElementById('row7_a0004').play()">></button>
+																																																																																																																																																	       <button onclick="document.getElementById('row7_a0004').pause()">||</button>
+																																																																																																																																																	           </td>
+																																																																																																																																																		       <td>
+																																																																																																																																																		           <audio id="row7_a0005" src="demo/RMS2BDL_6S_a0005.wav"></audio>
+																																																																																																																																																			       <button onclick="document.getElementById('row7_a0005').play()">></button>
+																																																																																																																																																			           <button onclick="document.getElementById('row7_a0005').pause()">||</button>
+																																																																																																																																																				       </td>
+																																																																																																																																																				          
+																																																																																																																																																					      <td>Joint-AE-VC [Mohammadi_Interspeech15], config: 6S, 5 training sentences</td>
+
+																																																																																																																																																					        </tr>
+
+
+																																																																																																																																																						<tr>
+																																																																																																																																																						    <th scope="row">DNN-L</th>
+
+																																																																																																																																																						        <td>
+																																																																																																																																																							    <audio id="row8_a0001" src="demo/RMS2BDL_1L_a0001.wav"></audio>
+																																																																																																																																																							        <button onclick="document.getElementById('row8_a0001').play()">></button>
+																																																																																																																																																								    <button onclick="document.getElementById('row8_a0001').pause()">||</button>
+																																																																																																																																																								        </td>
+																																																																																																																																																									    <td>
+																																																																																																																																																									        <audio id="row8_a0002" src="demo/RMS2BDL_1L_a0002.wav"></audio>
+																																																																																																																																																										    <button onclick="document.getElementById('row8_a0002').play()">></button>
+																																																																																																																																																										        <button onclick="document.getElementById('row8_a0002').pause()">||</button>
+																																																																																																																																																											    </td>
+																																																																																																																																																											        <td>
+																																																																																																																																																												    <audio id="row8_a0003" src="demo/RMS2BDL_1L_a0003.wav"></audio>
+																																																																																																																																																												        <button onclick="document.getElementById('row8_a0003').play()">></button>
+																																																																																																																																																													    <button onclick="document.getElementById('row8_a0003').pause()">||</button>
+																																																																																																																																																													        </td>
+																																																																																																																																																														    <td>
+																																																																																																																																																														        <audio id="row8_a0004" src="demo/RMS2BDL_1L_a0004.wav"></audio>
+																																																																																																																																																															    <button onclick="document.getElementById('row8_a0004').play()">></button>
+																																																																																																																																																															        <button onclick="document.getElementById('row8_a0004').pause()">||</button>
+																																																																																																																																																																    </td>
+																																																																																																																																																																        <td>
+																																																																																																																																																																	    <audio id="row8_a0005" src="demo/RMS2BDL_1L_a0005.wav"></audio>
+																																																																																																																																																																	        <button onclick="document.getElementById('row8_a0005').play()">></button>
+																																																																																																																																																																		    <button onclick="document.getElementById('row8_a0005').pause()">||</button>
+																																																																																																																																																																		        </td>
+																																																																																																																																																																			   
+																																																																																																																																																																			       <td>DNN-VC [Desai_TASLP10], config: 1L in [Mohammadi_Interspeech15], 100 training sentences</td>
+
+																																																																																																																																																																			         </tr>
+
+
+																																																																																																																																																																				 <tr>
+																																																																																																																																																																				     <th scope="row">jointAE-L</th>
+
+																																																																																																																																																																				         <td>
+																																																																																																																																																																					     <audio id="row9_a0001" src="demo/RMS2BDL_6L_a0001.wav"></audio>
+																																																																																																																																																																					         <button onclick="document.getElementById('row9_a0001').play()">></button>
+																																																																																																																																																																						     <button onclick="document.getElementById('row9_a0001').pause()">||</button>
+																																																																																																																																																																						         </td>
+																																																																																																																																																																							     <td>
+																																																																																																																																																																							         <audio id="row9_a0002" src="demo/RMS2BDL_6L_a0002.wav"></audio>
+																																																																																																																																																																								     <button onclick="document.getElementById('row9_a0002').play()">></button>
+																																																																																																																																																																								         <button onclick="document.getElementById('row9_a0002').pause()">||</button>
+																																																																																																																																																																									     </td>
+																																																																																																																																																																									         <td>
+																																																																																																																																																																										     <audio id="row9_a0003" src="demo/RMS2BDL_6L_a0003.wav"></audio>
+																																																																																																																																																																										         <button onclick="document.getElementById('row9_a0003').play()">></button>
+																																																																																																																																																																											     <button onclick="document.getElementById('row9_a0003').pause()">||</button>
+																																																																																																																																																																											         </td>
+																																																																																																																																																																												     <td>
+																																																																																																																																																																												         <audio id="row9_a0004" src="demo/RMS2BDL_6L_a0004.wav"></audio>
+																																																																																																																																																																													     <button onclick="document.getElementById('row9_a0004').play()">></button>
+																																																																																																																																																																													         <button onclick="document.getElementById('row9_a0004').pause()">||</button>
+																																																																																																																																																																														     </td>
+																																																																																																																																																																														         <td>
+																																																																																																																																																																															     <audio id="row9_a0005" src="demo/RMS2BDL_6L_a0005.wav"></audio>
+																																																																																																																																																																															         <button onclick="document.getElementById('row9_a0005').play()">></button>
+																																																																																																																																																																																     <button onclick="document.getElementById('row9_a0005').pause()">||</button>
+																																																																																																																																																																																         </td>
+																																																																																																																																																																																	    
+																																																																																																																																																																																	        <td>Joint-AE-VC [Mohammadi_Interspeech15], config: 6L, 100 training sentences</td>
+
+																																																																																																																																																																																		  </tr>
+
+																																																																																																																																																																																		  </table>
+																																																																																																																																																																																		     
+																																																																																																																																																																																		     <BR>
+																																																																																																																																																																																		     <UL>
+																																																																																																																																																																																		     <LI>
+																																																																																																																																																																																		     [Kain_ICASSP98], Spectral voice conversion for text-to-speech synthesis
+																																																																																																																																																																																		     </LI>
+																																																																																																																																																																																		     <LI>
+																																																																																																																																																																																		     [Desai_TASLP10], Spectral mapping using artificial neural networks for voice conversion
+																																																																																																																																																																																		     </LI>
+																																																																																																																																																																																		     <LI>
+																																																																																																																																																																																		     [Mohammadi_Interspeech15], Semi-supervised Training of a Voice Conversion Mapping Function using Joint-Autoencoder
+																																																																																																																																																																																		     </LI>
+																																																																																																																																																																																		     </UL>
+																																																																																																																																																																																		     <a href="http://cslu.ohsu.edu/~mohammah/">< back to home</a>
+																																																																																																																																																																																		       </body>
+																																																																																																																																																																																		       </html>
+
